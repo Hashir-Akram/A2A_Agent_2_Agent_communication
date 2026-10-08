@@ -6,6 +6,10 @@ A2A needs only two things from an agent:
     2. A task endpoint -> POST /   JSON-RPC method "message/send"
 
 Every specialist agent is just this server + a system prompt + an MCP script.
+
+NOTE: A2A does not *create* an agent. The agent (LLM + tools) is built in
+common/agent_brain.py. This file only EXPOSES that agent so others can discover
+and call it. Think "give the agent a phone number", not "create the agent".
 """
 import uuid
 import uvicorn
@@ -13,7 +17,7 @@ from fastapi import FastAPI
 from common.agent_brain import run_agent_with_mcp
 
 
-def create_agent_app(name, description, skills, port, system_prompt, mcp_script):
+def expose_as_a2a_agent(name, description, skills, port, system_prompt, mcp_script):
     app = FastAPI(title=name)
 
     # 1. Agent Card: the orchestrator reads this to discover the agent

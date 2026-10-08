@@ -17,6 +17,20 @@ User ─► Orchestrator ──A2A──► Weather Agent ──MCP──► Wea
 
 OpenAI (the LLM) is the *brain* inside the Orchestrator and inside each agent.
 
+## Common confusion: "Do we create agents with A2A?"
+
+**No.** A2A does not create agents (it is not like LangChain's `create_agent`).
+
+| Part | What it does | Where |
+|------|--------------|-------|
+| **Agent** | LLM + system prompt + tool loop (the thinking) | `common/agent_brain.py` |
+| **Tools** | functions the agent calls, via MCP | `mcp_servers/` |
+| **A2A** | makes an existing agent discoverable and callable by others | `expose_as_a2a_agent()` in `common/a2a_server.py` |
+
+A2A only defines the interface (Agent Card + `message/send`). It does not know or care
+what is inside the agent, so the agent could be built with LangChain, CrewAI or plain Python.
+That is why the function is called `expose_as_a2a_agent`: it *exposes* an agent, it does not build one.
+
 ## Project layout
 
 ```

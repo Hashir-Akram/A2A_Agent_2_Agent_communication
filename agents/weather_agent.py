@@ -1,8 +1,8 @@
 from pathlib import Path
-from common.a2a_server import create_agent_app, serve
+from common.a2a_server import expose_as_a2a_agent, serve
 
 PORT = 8001
-app = create_agent_app(
+app = expose_as_a2a_agent(
     name="Weather Agent",
     description="Gives weather forecasts for any city.",
     skills=[{"id": "forecast", "name": "Weather forecast",
